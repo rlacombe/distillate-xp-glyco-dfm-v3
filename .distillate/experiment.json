@@ -1,0 +1,41 @@
+{
+  "name": "glyco-dfm-v3",
+  "title": "Discrete Flow Matching v3: Publication-Ready Training",
+  "description": "50M parameter DFM model for glycan structure prediction with proper train/val/test split, robust checkpointing, and Pareto frontier evaluation",
+  "project": "Glycogen",
+  "status": "running",
+  "created": "2026-04-22T23:20:32Z",
+  "algorithm": "Discrete Flow Matching (DFM)",
+  "model_size": "50M parameters",
+  "data": "CandyCrush v2",
+  "baseline": {
+    "model": "GlycoBART",
+    "accuracy": 0.8903
+  },
+  "targets": {
+    "n1_accuracy": 0.8987,
+    "n8_accuracy": 0.92,
+    "n16_accuracy": 0.92
+  },
+  "key_features": [
+    "Proper train/val/test split (no data leakage)",
+    "Robust checkpointing (best, latest, periodic)",
+    "Resumable from latest checkpoint",
+    "DFM ODE solver with flexible step counts",
+    "Pareto frontier evaluation (N=[1,4,8,16,32])",
+    "HuggingFace Jobs integration"
+  ],
+  "metrics": {
+    "best_accuracy": 0.8987,
+    "test_set_size": 50000,
+    "train_set_size": 10000,
+    "val_set_size": 2500
+  },
+  "checkpoints": {
+    "best": "checkpoints/best_model.pt",
+    "latest": "checkpoints/latest_model.pt"
+  },
+  "results": {
+    "pareto_frontier": "models/pareto_frontier.json"
+  }
+}

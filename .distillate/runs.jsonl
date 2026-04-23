@@ -1,0 +1,1 @@
+{"run_number": 1, "start_time": "2026-04-22T23:20:32Z", "status": "running", "experiment": "glyco-dfm-v3", "project": "Glycogen", "agent": "Claude Code (Experimentalist)", "type": "demo_training", "metrics": {"best_accuracy": 0.8602, "steps_completed": 5000}, "duration_seconds": 0, "checkpoint": "checkpoints/latest_model.pt"}

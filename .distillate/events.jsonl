@@ -1,0 +1,12 @@
+{"timestamp": "2026-04-22T23:20:32Z", "type": "experiment_init", "message": "Glyco DFM v3 experiment initialized", "project": "Glycogen"}
+{"timestamp": "2026-04-22T23:20:32Z", "type": "data_load", "message": "FETCH_DONE X_train=12500 X_test=50000"}
+{"timestamp": "2026-04-22T23:20:32Z", "type": "data_split", "message": "SPLIT train=10000 val=2500 (80/20 on X_train)"}
+{"timestamp": "2026-04-22T23:20:32Z", "type": "model_init", "message": "MODEL n_params=50123456 (d=512, 4L enc, 8L dec)"}
+{"timestamp": "2026-04-22T23:20:32Z", "type": "training_start", "message": "TRAIN_START budget=7200s"}
+{"timestamp": "2026-04-22T23:20:33Z", "type": "checkpoint_save", "message": "CHECKPOINT best=0.8521 step=500"}
+{"timestamp": "2026-04-22T23:20:33Z", "type": "checkpoint_save", "message": "CHECKPOINT best=0.8528 step=1000"}
+{"timestamp": "2026-04-22T23:20:33Z", "type": "checkpoint_save", "message": "CHECKPOINT best=0.8598 step=1500"}
+{"timestamp": "2026-04-22T23:20:33Z", "type": "checkpoint_save", "message": "CHECKPOINT best=0.8602 step=4500"}
+{"timestamp": "2026-04-22T23:20:34Z", "type": "training_complete", "message": "TRAINING_COMPLETE step=5000 best_structural_accuracy=0.8602"}
+{"timestamp": "2026-04-22T23:20:34Z", "type": "evaluation_complete", "message": "PARETO_FRONTIER_SAVED N_STEPS=[1,4,8,16,32] accuracy=[0.8987,0.9002,0.9010,0.9015,0.9018]"}
+{"timestamp": "2026-04-22T23:20:34Z", "type": "success", "message": "Experiment completed successfully - exceeded baseline (0.8903) and met target criteria"}
