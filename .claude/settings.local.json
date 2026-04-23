@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(git:*)",
+      "Bash(tail:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(wc:*)",
+      "Bash(mkdir:*)",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "WebSearch",
+      "mcp__distillate__start_run",
+      "mcp__distillate__conclude_run",
+      "mcp__distillate__save_enrichment",
+      "mcp__distillate__annotate_run",
+      "mcp__distillate__submit_hf_job",
+      "mcp__distillate__check_hf_job",
+      "mcp__distillate__cancel_hf_job",
+      "mcp__distillate__list_hf_jobs"
+    ]
+  }
+}

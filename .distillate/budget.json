@@ -1,0 +1,13 @@
+{
+  "compute": {
+    "provider": "hfjobs",
+    "gpu_type": "a100-large",
+    "budget_usd": 10.0,
+    "cost_per_hour": 2.5
+  },
+  "run_budget_seconds": 3600,
+  "train_budget_seconds": 3600,
+  "wrap_budget_seconds": 360,
+  "session_budget_seconds": null,
+  "session_started_at": "2026-04-23T06:38:26.686926+00:00"
+}
