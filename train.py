@@ -41,7 +41,14 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 ZENODO = "https://zenodo.org/records/10997110/files"
 
-def fetch(name, url, cache=Path("/tmp")):
+def fetch(name, url, cache=None):
+    # On HF Jobs, use mounted dataset at /data; otherwise download to /tmp
+    if cache is None:
+        if os.getenv("DISTILLATE_COMPUTE") == "hfjobs":
+            cache = Path("/data")
+        else:
+            cache = Path("/tmp")
+
     p = cache / name
     if not p.exists():
         print(f"DOWNLOAD {name} <- {url}", flush=True)
@@ -53,6 +60,9 @@ def fetch(name, url, cache=Path("/tmp")):
                 if chunk: f.write(chunk)
         sz = p.stat().st_size / 1e6
         print(f"DOWNLOAD_OK {name} size={sz:.1f}MB dt={time.time()-t0:.1f}s", flush=True)
+    else:
+        print(f"CACHE_HIT {name} from {cache}", flush=True)
+
     print(f"UNPICKLE {name}...", flush=True); t0 = time.time()
     obj = pickle.loads(p.read_bytes())
     print(f"UNPICKLE_OK {name} dt={time.time()-t0:.1f}s", flush=True)

@@ -25,5 +25,9 @@
       "mcp__distillate__cancel_hf_job",
       "mcp__distillate__list_hf_jobs"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "distillate"
+  ],
+  "enableAllProjectMcpServers": true
 }
