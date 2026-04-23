@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+/tmp/
+*.pkl
+.distillate/checkpoints/
+.claude/scheduled_tasks.lock

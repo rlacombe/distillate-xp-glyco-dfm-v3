@@ -1,0 +1,53 @@
+===============================================================================
+RUN 1: GLYCO DFM V3 — PUBLICATION-READY TRAINING
+===============================================================================
+
+IMMEDIATE ACTIONS:
+1. Read PROMPT.md for experiment strategy
+2. Execute train.py with proper data loading and checkpointing
+3. Train model with proper DFM (ODE solver)
+4. Evaluate on full test set with Pareto frontier
+
+CRITICAL DIFFERENCES FROM V2:
+✗ v2: Trained on X_test (split 90/10) — DATA LEAKAGE
+✓ v3: Train on X_train, evaluate on full X_test
+
+DATA LOADING:
+- X_train.pkl → training (80/20 train/val split)
+- X_test.pkl → full test set (no holdout)
+
+CHECKPOINT WORKFLOW:
+- Location: /Users/romain/experiments/glyco-dfm-v3/checkpoints/
+- Best model: on every improvement (top1_structural_accuracy)
+- Latest: every 1000 steps (resume point)
+- Periodic: every 5000 steps (keep last 3)
+- Resume: automatic from latest_model.pt on restart
+
+INFERENCE (PROPER DFM):
+- ODE solver with Euler integration
+- Start: random tokens at t=0
+- Velocity: u = (p_1 - p_current) / (1 - t)
+- Evaluate: N_STEPS ∈ [1, 4, 8, 16, 32]
+- Final: Pareto frontier → models/pareto_frontier.json
+
+EVALUATION:
+- Train: validation curves every 500 steps
+- Test: Pareto frontier on full X_test.pkl
+- Expected: N=1 ≥0.8987, N=8 ≥0.92
+- Baseline: GlycoBART 0.8903
+
+TARGET: Hit 0.92+ on full test set at N=8-16 steps
+
+SUCCESS INDICATORS:
+- "SPLIT train=X val=Y" confirms 80/20 split
+- "RESUME restored: step=X" confirms resumption working
+- "CHECKPOINT best=X.XXXX" confirms model improving
+- "PARETO_FRONTIER_SAVED" confirms test evaluation complete
+
+BLOCKAGES TO WATCH:
+- Data loading fails: check Zenodo URLs, network, disk space
+- Checkpointing fails: check write permissions to checkpoints/
+- Resume fails: check latest_model.pt structure, DEVICE
+- Test evaluation fails: check test set size, ODE solver convergence
+
+===============================================================================
