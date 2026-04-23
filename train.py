@@ -28,18 +28,15 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-OUT = Path("/output"); OUT.mkdir(parents=True, exist_ok=True)
 
-# Determine checkpoint location based on environment
 if os.getenv("DISTILLATE_COMPUTE") == "hfjobs":
-    # HuggingFace Jobs: save to persistent /output/ bucket
     CHECKPOINT_DIR = Path("/output/checkpoints")
+    MODELS_DIR = Path("/output/models")
 else:
-    # Local: save to experiment directory
     CHECKPOINT_DIR = Path("/Users/romain/experiments/glyco-dfm-v3/checkpoints")
+    MODELS_DIR = Path("/Users/romain/experiments/glyco-dfm-v3/models")
 
 CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
-MODELS_DIR = Path("/Users/romain/experiments/glyco-dfm-v3/models")
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 ZENODO = "https://zenodo.org/records/10997110/files"
@@ -130,13 +127,15 @@ def get_feats(x):
 
 MZ_LEN = get_feats(X_all[0])[0].shape[0]
 
-def stack_feats(idx):
+def stack_feats(idx, source=None):
+    if source is None:
+        source = X_all
     N = len(idx)
     MZ   = np.zeros((N, MZ_LEN), dtype=np.float32)
     MZR  = np.zeros((N, MZ_LEN), dtype=np.float32)
     PREC = np.zeros((N,),         dtype=np.float32)
     for i, j in enumerate(idx):
-        mz, mz_r, prec = get_feats(X_all[j])
+        mz, mz_r, prec = get_feats(source[j])
         n = min(mz.shape[0], MZ_LEN); MZ[i, :n] = mz[:n]
         n = min(mz_r.shape[0], MZ_LEN); MZR[i, :n] = mz_r[:n]
         PREC[i] = prec
@@ -448,7 +447,7 @@ test_idx = [i for i, s in enumerate(y_test_strs) if s]
 
 print(f"TEST_SET: {len(test_idx)} samples", flush=True)
 
-MZ_te, MZR_te, PREC_te = stack_feats(test_idx)
+MZ_te, MZR_te, PREC_te = stack_feats(test_idx, source=X_test_all)
 y_test_kept = [y_test_strs[i] for i in test_idx]
 
 MZ_te_t = norm_spec(torch.tensor(MZ_te))
