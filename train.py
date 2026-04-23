@@ -42,13 +42,15 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 ZENODO = "https://zenodo.org/records/10997110/files"
 
 def fetch(name, url, cache=None):
-    # On HF Jobs, use mounted dataset at /data; otherwise download to /tmp
     if cache is None:
         if os.getenv("DISTILLATE_COMPUTE") == "hfjobs":
-            cache = Path("/data")
+            # Prefer /data (HF dataset mount) if it exists; else fall back to /tmp
+            data_dir = Path("/data")
+            cache = data_dir if data_dir.is_dir() else Path("/tmp")
         else:
             cache = Path("/tmp")
 
+    cache.mkdir(parents=True, exist_ok=True)
     p = cache / name
     if not p.exists():
         print(f"DOWNLOAD {name} <- {url}", flush=True)
