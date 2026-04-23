@@ -1,0 +1,8 @@
+[
+  {
+    "kind": "wrong_platform",
+    "message": "Ran locally instead of HF Jobs (a100-large). DISTILLATE_COMPUTE may not have reached the agent \u2014 check compute config and re-launch.",
+    "ts": "2026-04-23T07:04:35.547584+00:00",
+    "dismissed": false
+  }
+]

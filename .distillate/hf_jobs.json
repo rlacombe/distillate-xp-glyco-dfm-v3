@@ -12,5 +12,11 @@
   ],
   "command": "pip install requests glycowork && python train.py",
   "private": true,
-  "persistent_storage_size": 50
+  "persistent_storage_size": 50,
+  "69e9c24b2aa1660eaffa8e19": {
+    "project_path": "/Users/romain/experiments/glyco-dfm-v3",
+    "script": "train.py",
+    "flavor": "a100-large",
+    "submitted_at": "2026-04-23T06:55:07.772075+00:00"
+  }
 }
