@@ -1,0 +1,14 @@
+[project]
+name = "glyco-dfm-v3"
+version = "0.1.0"
+description = "Discrete Flow Matching for glycan structure prediction"
+dependencies = [
+    "requests>=2.28.0",
+    "glycowork>=0.5.0",
+    "torch>=2.1.0,<3.0",
+    "numpy>=1.24.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

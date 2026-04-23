@@ -1,0 +1,13 @@
+{
+  "name": "glyco-dfm-v3",
+  "description": "Discrete Flow Matching for glycan structure prediction with proper DFM and checkpointing",
+  "image_uri": "huggingface/transformers-pytorch:4.38-cuda-12.2-runtime",
+  "hardware": "gpu-t4",
+  "env": {
+    "TRAIN_SECONDS": "7200",
+    "DISTILLATE_COMPUTE": "hfjobs"
+  },
+  "command": "pip install requests glycowork && python train.py",
+  "private": true,
+  "persistent_storage_size": 50
+}

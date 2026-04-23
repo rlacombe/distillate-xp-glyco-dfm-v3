@@ -1,0 +1,11 @@
+{
+  "step": 15000,
+  "best_struct": 0.869651043419217,
+  "model_config": {
+    "d_model": 512,
+    "n_enc": 4,
+    "n_dec": 8,
+    "vocab_size": 842,
+    "max_len": 96
+  }
+}
