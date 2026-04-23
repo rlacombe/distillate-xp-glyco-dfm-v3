@@ -55,11 +55,25 @@ def fetch(name, url, cache=None):
     if not p.exists():
         print(f"DOWNLOAD {name} <- {url}", flush=True)
         t0 = time.time()
-        r = requests.get(url, stream=True, timeout=1800)
-        r.raise_for_status()
-        with open(p, "wb") as f:
-            for chunk in r.iter_content(chunk_size=1<<20):
-                if chunk: f.write(chunk)
+        max_retries, delay = 12, 30
+        for attempt in range(max_retries):
+            try:
+                r = requests.get(url, stream=True, timeout=1800)
+                r.raise_for_status()
+                with open(p, "wb") as f:
+                    for chunk in r.iter_content(chunk_size=1<<20):
+                        if chunk: f.write(chunk)
+                if p.stat().st_size < 10_000:
+                    p.unlink()
+                    raise ValueError(f"Downloaded file too small ({p.stat().st_size if p.exists() else 0} bytes) — likely an error page")
+                break
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    print(f"DOWNLOAD_RETRY {name} attempt={attempt+1} err={e} wait={delay}s", flush=True)
+                    time.sleep(delay)
+                    delay = min(delay * 2, 300)
+                else:
+                    raise
         sz = p.stat().st_size / 1e6
         print(f"DOWNLOAD_OK {name} size={sz:.1f}MB dt={time.time()-t0:.1f}s", flush=True)
     else:
